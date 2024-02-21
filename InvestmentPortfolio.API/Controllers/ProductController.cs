@@ -1,4 +1,5 @@
-﻿using InvestmentPortfolio.Application.Commands.RegisterProduct;
+﻿using InvestmentPortfolio.Application.Commands.ChangeProduct;
+using InvestmentPortfolio.Application.Commands.RegisterProduct;
 using InvestmentPortfolio.Application.Queries.Product.GetAllProducts;
 using InvestmentPortfolio.Application.Queries.Product.GetProductsById;
 using InvestmentPortfolio.Application.ViewModels;
@@ -51,6 +52,18 @@ namespace InvestmentPortfolio.API.Controllers
         public async Task<IActionResult> GetProductDetail([FromQuery] Guid productId)
         {
             var result = await _mediator.Send(new GetProductByIdQuery(productId));
+            return result != null ? Ok(result) : NotFound();
+        }
+
+
+        [HttpPatch("change-product")]
+        [SwaggerOperation(Summary = "Atualiza um produto registrado")]
+        [ProducesResponseType(typeof(IEnumerable<ProductViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        public async Task<IActionResult> UpdateProduct([FromBody] ChangeProductCommand command)
+        {
+            var result = await _mediator.Send(command);
             return result != null ? Ok(result) : NotFound();
         }
     }

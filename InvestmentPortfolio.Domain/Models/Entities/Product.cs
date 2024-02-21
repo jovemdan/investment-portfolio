@@ -16,5 +16,12 @@ namespace InvestmentPortfolio.Domain.Models.Entities
         public DateTime DueDate { get; private set; }
 
         public virtual ICollection<Administrator> Administrators { get; set; }
+
+        public void ChangeProduct(string name, decimal price, DateTime dueDate)
+        {
+            Name = name;
+            Price = price;
+            DueDate = dueDate;
+        }
     }
 }
