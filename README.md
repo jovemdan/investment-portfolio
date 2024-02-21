@@ -1,5 +1,18 @@
 # investment-portfolio
 
+## Tecnologias e patterns utilizados.
+
+#### .NET 7
+#### Entity Framework
+#### Docker
+#### SqlServer
+#### FluentValidations
+#### CQRS
+#### Mediator
+#### DDD
+#### Swagger
+
+
 ## Instruções para executar o projeto
 
 #### ⚠️ Docker e Docker Compose
