@@ -32,5 +32,6 @@
 
 <p align="center">
   <h4>Estrutura do banco de dados</h4>
-  <img src="/img/diagrama.png" title="Banco de dados">
+  <img width="812" alt="diagrama" src="https://github.com/jovemdan/investment-portfolio/assets/25301052/fd3b0cfe-e3e6-4e16-ba76-78b86bf61d52">
+
 </p>
