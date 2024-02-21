@@ -56,7 +56,7 @@ namespace InvestmentPortfolio.API.Controllers
         }
 
 
-        [HttpPatch("change-product")]
+        [HttpPut("change-product")]
         [SwaggerOperation(Summary = "Atualiza um produto registrado")]
         [ProducesResponseType(typeof(IEnumerable<ProductViewModel>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]

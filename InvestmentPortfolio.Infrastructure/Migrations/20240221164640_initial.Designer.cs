@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvestmentPortfolio.Infrastructure.Migrations
 {
     [DbContext(typeof(InvestmentPortfolioContext))]
-    [Migration("20240221004140_Create Table Investments")]
-    partial class CreateTableInvestments
+    [Migration("20240221164640_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,7 +60,12 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("NotificationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("NotificationId");
 
                     b.ToTable("Administrators");
                 });
@@ -127,6 +132,32 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Investments");
+                });
+
+            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdministratorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("Message")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("SentDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Product", b =>
@@ -213,6 +244,13 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Administrator", b =>
+                {
+                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Notification", null)
+                        .WithMany("Administrators")
+                        .HasForeignKey("NotificationId");
+                });
+
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Customer", b =>
                 {
                     b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Investment", null)
@@ -236,6 +274,11 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                     b.Navigation("Customers");
 
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Notification", b =>
+                {
+                    b.Navigation("Administrators");
                 });
 
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Transaction", b =>

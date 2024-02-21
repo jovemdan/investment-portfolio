@@ -4,7 +4,7 @@ namespace InvestmentPortfolio.Domain.Models.Entities
 {
     public class Investment : BaseEntity
     {
-        public Investment(Guid customerId, Guid productId, DateTime purchaseDate)
+        public Investment(Guid id, Guid customerId, Guid productId, DateTime purchaseDate) : base(id)
         {
             CustomerId = customerId;
             ProductId = productId;

@@ -4,7 +4,7 @@ namespace InvestmentPortfolio.Domain.Models.Entities
 {
     public class Transaction : BaseEntity
     {
-        public Transaction(Guid productId, TypeEnum type, int quantity, decimal value, DateTime transactionDate)
+        public Transaction(Guid id, Guid productId, TypeEnum type, int quantity, decimal value, DateTime transactionDate): base(id)
         {
             ProductId = productId;
             Type = type;

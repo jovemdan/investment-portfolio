@@ -34,6 +34,8 @@ namespace InvestmentPortfolio.Infrastructure
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IAdministratorRepository, AdministratorRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IInvestmentRepository, InvestmentRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
 
             return services;
         }

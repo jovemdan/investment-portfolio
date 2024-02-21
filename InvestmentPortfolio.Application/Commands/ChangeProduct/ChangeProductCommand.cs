@@ -1,4 +1,5 @@
 ﻿using FluentValidation.Results;
+using InvestmentPortfolio.Application.Validations;
 using MediatR;
 using System.Text.Json.Serialization;
 
@@ -27,7 +28,8 @@ namespace InvestmentPortfolio.Application.Commands.ChangeProduct
 
         public override bool IsValid()
         {
-            throw new NotImplementedException();
+            ValidationResult = new ChangeProductCommandValidator().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
 }

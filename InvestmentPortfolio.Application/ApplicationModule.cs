@@ -21,6 +21,7 @@ public static class ApplicationModule
         services.AddValidatorsFromAssemblyContaining<RegisterCustomerCommandValidator>(ServiceLifetime.Scoped);
         services.AddValidatorsFromAssemblyContaining<RegisterAdministratorCommandValidator>(ServiceLifetime.Scoped);
         services.AddValidatorsFromAssemblyContaining<RegisterProductCommandValidator>(ServiceLifetime.Scoped);
+        services.AddValidatorsFromAssemblyContaining<ChangeProductCommandValidator>(ServiceLifetime.Scoped);
 
         return services;
     }

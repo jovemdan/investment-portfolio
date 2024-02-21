@@ -18,4 +18,20 @@
 	  <ProjectReference Include="..\InvestmentPortfolio.Domain\InvestmentPortfolio.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Commands\RegisterInvestment\" />
+	  <None Remove="Queries\Investment\" />
+	  <None Remove="Queries\Investment\GetAllInvestments\" />
+	  <None Remove="Commands\RegisterTransaction\" />
+	  <None Remove="Queries\Transaction\" />
+	  <None Remove="Queries\Transaction\GetTransactionsByProduct\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Commands\RegisterInvestment\" />
+	  <Folder Include="Queries\Investment\" />
+	  <Folder Include="Queries\Investment\GetAllInvestments\" />
+	  <Folder Include="Commands\RegisterTransaction\" />
+	  <Folder Include="Queries\Transaction\" />
+	  <Folder Include="Queries\Transaction\GetTransactionsByProduct\" />
+	</ItemGroup>
 </Project>
