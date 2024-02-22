@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using System.Transactions;
 using InvestmentPortfolio.Application.ViewModels;
 using InvestmentPortfolio.Domain.Models.Entities;
 
@@ -9,12 +10,14 @@ namespace InvestmentPortfolio.Application.ViewModels
     {
 		public InvestmentViewModel(
             Guid id, DateTime createAt, DateTime? lastUpdate,
-			Guid customerId, Guid productId, DateTime purchaseDate)
+			Guid customerId, Guid productId, Guid transactionId, DateTime purchaseDate, bool isAvailable)
             : base(id, createAt, lastUpdate)
         {
             CustomerId = customerId;
             ProductId = productId;
+            TransactionId = transactionId;
             PurchaseDate = purchaseDate;
+            IsAvailable = isAvailable;
         }
 
         [JsonPropertyName("customer_id")]
@@ -23,8 +26,14 @@ namespace InvestmentPortfolio.Application.ViewModels
         [JsonPropertyName("product_id")]
         public Guid ProductId { get; private set; }
 
+        [JsonPropertyName("transaction_id")]
+        public Guid TransactionId { get; private set; }
+
         [JsonPropertyName("purchase_date")]
         public DateTime PurchaseDate { get; private set; }
+
+        [JsonPropertyName("is_available")]
+        public bool IsAvailable { get; private set; }
 
         public static InvestmentViewModel MapFromDomain(Investment entity)
         {
@@ -35,7 +44,9 @@ namespace InvestmentPortfolio.Application.ViewModels
                 entity.LastUpdate,
                 entity.CustomerId,
                 entity.ProductId,
-                entity.PurchaseDate
+                entity.TransactionId,
+                entity.PurchaseDate,
+                entity.IsAvailable
             );
             return customerViewModel;
         }

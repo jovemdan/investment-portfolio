@@ -47,6 +47,18 @@ namespace InvestmentPortfolio.Infrastructure.Repositories
             return await _context.Investments
                 .ToListAsync();
         }
+
+        public async Task<List<Investment>> FindAllByAsync(Func<Investment, bool> predicate)
+        {
+            var response = _context.Investments.Where(predicate).ToList();
+            return await Task.FromResult(response);
+        }
+
+        public async Task<Investment> GetByCustomerIdAndProductId(Guid customerId, Guid productId)
+        {
+            return await _context.Investments
+            .FirstOrDefaultAsync(i => i.CustomerId == customerId && i.ProductId == productId);
+        }
         #endregion
 
         public void Dispose()
@@ -58,11 +70,6 @@ namespace InvestmentPortfolio.Infrastructure.Repositories
         {
             await _context.SaveChangesAsync();
         }
-
-        public async Task<List<Investment>> FindAllByAsync(Func<Investment, bool> predicate)
-        {
-            var response = _context.Investments.Where(predicate).ToList();
-            return await Task.FromResult(response);
-        }
+      
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InvestmentPortfolio.Infrastructure.Migrations
 {
     [DbContext(typeof(InvestmentPortfolioContext))]
-    [Migration("20240221164640_initial")]
+    [Migration("20240222011605_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -60,12 +60,7 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("NotificationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("NotificationId");
 
                     b.ToTable("Administrators");
                 });
@@ -84,9 +79,6 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("CreateAt");
 
-                    b.Property<Guid?>("InvestmentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime")
                         .HasColumnName("LastUpdate");
@@ -100,8 +92,6 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InvestmentId");
 
                     b.ToTable("Customers", (string)null);
 
@@ -120,6 +110,9 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime2");
 
@@ -129,7 +122,14 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("TransactionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Investments");
                 });
@@ -157,6 +157,8 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdministratorId");
+
                     b.ToTable("Notifications");
                 });
 
@@ -172,9 +174,6 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("InvestmentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime2");
 
@@ -185,14 +184,7 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid?>("TransactionId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("InvestmentId");
-
-                    b.HasIndex("TransactionId");
 
                     b.ToTable("Products");
                 });
@@ -205,6 +197,9 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime2");
@@ -226,6 +221,10 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductId");
+
                     b.ToTable("Transactions");
                 });
 
@@ -244,46 +243,53 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Administrator", b =>
-                {
-                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Notification", null)
-                        .WithMany("Administrators")
-                        .HasForeignKey("NotificationId");
-                });
-
-            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Customer", b =>
-                {
-                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Investment", null)
-                        .WithMany("Customers")
-                        .HasForeignKey("InvestmentId");
-                });
-
-            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Product", b =>
-                {
-                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Investment", null)
-                        .WithMany("Products")
-                        .HasForeignKey("InvestmentId");
-
-                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Transaction", null)
-                        .WithMany("Products")
-                        .HasForeignKey("TransactionId");
-                });
-
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Investment", b =>
                 {
-                    b.Navigation("Customers");
+                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Products");
+                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Notification", b =>
                 {
-                    b.Navigation("Administrators");
+                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Administrator", "Administrator")
+                        .WithMany()
+                        .HasForeignKey("AdministratorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Administrator");
                 });
 
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Transaction", b =>
                 {
-                    b.Navigation("Products");
+                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
                 });
 #pragma warning restore 612, 618
         }

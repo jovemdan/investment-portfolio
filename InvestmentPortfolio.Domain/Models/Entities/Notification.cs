@@ -15,6 +15,6 @@ namespace InvestmentPortfolio.Domain.Models.Entities
         public Guid Message { get; private set; }
         public DateTime SentDate { get; private set; }
 
-        public virtual ICollection<Administrator> Administrators { get; set; }
+        public virtual Administrator Administrator { get; set; }
     }
 }

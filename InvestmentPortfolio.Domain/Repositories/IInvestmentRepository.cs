@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using InvestmentPortfolio.Domain.Models.Entities;
 
 namespace InvestmentPortfolio.Domain.Repositories
@@ -15,6 +16,7 @@ namespace InvestmentPortfolio.Domain.Repositories
         Task<Investment> FindByAsync(Func<Investment, bool> predicate);
         Task<List<Investment>> FindAllByAsync(Func<Investment, bool> predicate);
         Task<List<Investment>> GetAllAsync();
+        Task<Investment> GetByCustomerIdAndProductId(Guid customerId, Guid productId);
         #endregion
 
         Task CommitAsync();

@@ -13,7 +13,7 @@ namespace InvestmentPortfolio.Infrastructure.Persistence.Configurations.Entities
             builder.ConfigureBaseEntity();
 
             builder
-                .HasOne(x => x.Administrators)
+                .HasOne(x => x.Administrator)
                 .WithMany()
                 .HasForeignKey(transaction => transaction.AdministratorId);
         }

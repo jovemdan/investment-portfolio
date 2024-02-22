@@ -14,9 +14,16 @@ namespace InvestmentPortfolio.Infrastructure.Persistence.Configurations.Entities
             builder.ConfigureBaseEntity();
 
             builder
-                .HasOne(x => x.Products)
+              .HasOne(x => x.Product)
+              .WithMany()
+              .HasForeignKey(transaction => transaction.ProductId)
+              .OnDelete(DeleteBehavior.NoAction);
+
+            builder
+                .HasOne(x => x.Customer)
                 .WithMany()
-                .HasForeignKey(transaction => transaction.ProductId);
+                .HasForeignKey(transaction => transaction.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

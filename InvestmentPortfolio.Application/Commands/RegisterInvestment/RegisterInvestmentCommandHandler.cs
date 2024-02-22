@@ -38,7 +38,9 @@ namespace InvestmentPortfolio.Application.Commands.RegisterInvestment
                 id: Guid.NewGuid(),
                 customerId: command.CustomerId,
                 productId: command.ProductId,
-                purchaseDate: DateTime.Now
+                transactionId: command.TransactionId,
+                purchaseDate: DateTime.Now,
+                isAvailable: true
             ); ;
 
             await _repository.AddAsync(investment);
