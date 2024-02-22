@@ -22,5 +22,10 @@ namespace InvestmentPortfolio.Domain.Models.Entities
 
         public virtual Product Product { get; set; }
         public virtual Customer Customer { get; set; }
+
+        public void ChangeInvestment(bool isAvailable)
+        {
+            IsAvailable = isAvailable;
+        }
     }
 }

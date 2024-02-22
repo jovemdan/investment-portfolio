@@ -26,6 +26,7 @@
 	  <None Remove="Queries\Transaction\" />
 	  <None Remove="Queries\Transaction\GetTransactionsByProduct\" />
 	  <None Remove="Commands\RemoveInvestment\" />
+	  <None Remove="Commands\ChangeInvestment\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Commands\RegisterInvestment\" />
@@ -35,5 +36,6 @@
 	  <Folder Include="Queries\Transaction\" />
 	  <Folder Include="Queries\Transaction\GetTransactionsByProduct\" />
 	  <Folder Include="Commands\RemoveInvestment\" />
+	  <Folder Include="Commands\ChangeInvestment\" />
 	</ItemGroup>
 </Project>

@@ -51,7 +51,7 @@ namespace InvestmentPortfolio.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> GetInvestmentsByCustomerId([FromQuery] Guid customerId)
         {
-            var result = await _mediator.Send(new GetInvestmentByCustomerIdQuery(customerId));
+            var result = await _mediator.Send(new GetInvestmentByCustomerIdQuery(customerId, true));
             return result != null ? Ok(result) : NotFound();
         }
     }

@@ -7,13 +7,16 @@ namespace InvestmentPortfolio.Application.Queries.Investment.GetInvestmentByCust
 {
 	public class GetInvestmentByCustomerIdQuery : IRequest<IEnumerable<InvestmentViewModel>>
     {
-        public GetInvestmentByCustomerIdQuery(Guid customerId)
+        public GetInvestmentByCustomerIdQuery(Guid customerId, bool isAvailable)
         {
             CustomerId = customerId;
         }
 
         [JsonPropertyName("customer_id")]
         public Guid CustomerId { get; private set; }
+
+        [JsonPropertyName("is_available")]
+        public bool IsAvailable { get; private set; }
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using FluentValidation.Results;
+using InvestmentPortfolio.Application.Commands.ChangeInvestment;
 using InvestmentPortfolio.Application.Commands.RegisterCustomerCommand;
 using InvestmentPortfolio.Application.Commands.RegisterInvestment;
 using InvestmentPortfolio.Domain.Models;
@@ -67,21 +68,24 @@ namespace InvestmentPortfolio.Application.Commands.RegisterTransaction
                 var result = await _mediator.Send(investmentCommand);
             }
 
-            if(transaction.Type == TypeEnum.sale)
+            if (transaction.Type == TypeEnum.sale)
             {
-                //var investment = await _investmentRepository.GetByCustomerIdAndProductId(transaction.CustomerId, transaction.ProductId);
+                var investment = await _investmentRepository.GetByCustomerIdAndProductId(transaction.CustomerId, transaction.ProductId);
+                investment.IsAvailable = false;
 
-                //if (investment != null)
-                //{
-                //    investment.IsAvailable = false;
-                //    _investmentRepository.Update(investment);
-                //    await _investmentRepository.CommitAsync();
-                //}
-                //else
-                //{
-                //    AddError("Investment not found for sale transaction");
-                //    return ValidationResult;
-                //}
+                if (investment != null)
+                {
+                    var investmentChangeCommand = new ChangeInvestmentCommand(
+                           investment.Id,
+                           investment.IsAvailable);
+
+                    var result = await _mediator.Send(investmentChangeCommand);
+                }
+                else
+                {
+                    AddError("Investment not found for sale transaction");
+                    return ValidationResult;
+                }
             }
 
             _logger.LogInformation($"{nameof(RegisterTransactionCommandHandler)} successfully completed");
