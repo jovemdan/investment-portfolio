@@ -8,7 +8,7 @@ namespace InvestmentPortfolio.Infrastructure.Persistence.Configurations.Entities
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.ToTable("Customers");
+            builder.ToTable("Products");
 
             builder.ConfigureBaseEntity();
 

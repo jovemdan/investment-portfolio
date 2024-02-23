@@ -57,7 +57,13 @@ namespace InvestmentPortfolio.Infrastructure.Repositories
         public async Task<Investment> GetByCustomerIdAndProductId(Guid customerId, Guid productId)
         {
             return await _context.Investments
-            .FirstOrDefaultAsync(i => i.CustomerId == customerId && i.ProductId == productId);
+            .FirstOrDefaultAsync(i => i.CustomerId == customerId && i.ProductId == productId && i.IsAvailable == true);
+        }
+
+        public async Task<Investment> GetByTransactionId(Guid transactionId)
+        {
+            return await _context.Investments
+            .FirstOrDefaultAsync(i => i.TransactionId == transactionId);
         }
         #endregion
 

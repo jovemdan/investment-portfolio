@@ -14,5 +14,7 @@ namespace InvestmentPortfolio.Domain.Models.Entities
         public string Name { get; private set; }
         public string CellPhone { get; private set; }
         public string MainEmail { get; private set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Investment> Investments { get; set; }
     }
 }

@@ -23,17 +23,6 @@ namespace InvestmentPortfolio.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        [SwaggerOperation(Summary = "Registra um investimento.")]
-        [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Add([FromBody] RegisterInvestmentCommand command)
-        {
-            var result = await _mediator.Send(command);
-            return result.IsValid ? NoContent() : BadRequest();
-        }
-
         [HttpGet]
         [SwaggerOperation(Summary = "Busca todos os investimento registrados.")]
         [ProducesResponseType(typeof(IEnumerable<InvestmentViewModel>), (int)HttpStatusCode.OK)]

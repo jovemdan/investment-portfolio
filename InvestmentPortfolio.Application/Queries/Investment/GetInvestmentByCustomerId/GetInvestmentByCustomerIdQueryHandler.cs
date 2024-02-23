@@ -18,7 +18,7 @@ namespace InvestmentPortfolio.Application.Queries.Investment.GetInvestmentByCust
 
         public async Task<IEnumerable<InvestmentViewModel>> Handle(GetInvestmentByCustomerIdQuery request, CancellationToken cancellationToken)
         {
-            var investments = await _repository.FindAllByAsync(x => x.CustomerId == request.CustomerId && x.IsAvailable == request.IsAvailable);
+            var investments = await _repository.FindAllByAsync(x => x.CustomerId == request.CustomerId && x.IsAvailable == true);
 
             if (investments == null) return null;
 

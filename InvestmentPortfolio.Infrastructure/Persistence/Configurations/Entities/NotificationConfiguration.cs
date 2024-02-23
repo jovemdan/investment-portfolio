@@ -14,7 +14,7 @@ namespace InvestmentPortfolio.Infrastructure.Persistence.Configurations.Entities
 
             builder
                 .HasOne(x => x.Administrator)
-                .WithMany()
+                .WithMany(a => a.Notifications)
                 .HasForeignKey(transaction => transaction.AdministratorId);
         }
     }

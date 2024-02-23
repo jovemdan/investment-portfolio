@@ -243,13 +243,13 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Investment", b =>
                 {
                     b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Investments")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("Investments")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -262,7 +262,7 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Notification", b =>
                 {
                     b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Administrator", "Administrator")
-                        .WithMany()
+                        .WithMany("Notifications")
                         .HasForeignKey("AdministratorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -273,13 +273,13 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
             modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Transaction", b =>
                 {
                     b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("InvestmentPortfolio.Domain.Models.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -287,6 +287,25 @@ namespace InvestmentPortfolio.Infrastructure.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Administrator", b =>
+                {
+                    b.Navigation("Notifications");
+                });
+
+            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Customer", b =>
+                {
+                    b.Navigation("Investments");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("InvestmentPortfolio.Domain.Models.Entities.Product", b =>
+                {
+                    b.Navigation("Investments");
+
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

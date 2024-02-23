@@ -14,13 +14,13 @@ namespace InvestmentPortfolio.Infrastructure.Persistence.Configurations.Entities
 
             builder
                  .HasOne(x => x.Product)
-                 .WithMany()
+                 .WithMany(a => a.Investments)
                  .HasForeignKey(transaction => transaction.ProductId)
                  .OnDelete(DeleteBehavior.NoAction);
 
             builder
                .HasOne(x => x.Customer)
-               .WithMany()
+               .WithMany(a => a.Investments)
                .HasForeignKey(transaction => transaction.CustomerId)
                .OnDelete(DeleteBehavior.NoAction);
         }

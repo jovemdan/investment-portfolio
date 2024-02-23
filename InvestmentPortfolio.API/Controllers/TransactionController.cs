@@ -33,7 +33,7 @@ namespace InvestmentPortfolio.API.Controllers
         public async Task<IActionResult> Add([FromBody] RegisterTransactionCommand command)
         {
             var result = await _mediator.Send(command);
-            return result.IsValid ? NoContent() : BadRequest();
+            return result.IsValid ? NoContent() : BadRequest(error: result.Errors);
         }
 
 

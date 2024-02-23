@@ -40,41 +40,40 @@ namespace InvestmentPortfolio.Application.Commands.RegisterTransaction
                 return command.ValidationResult;
             }
 
-            var transaction = new Transaction(
-               id: Guid.NewGuid(),
-               productId: command.ProductId,
-               customerId: command.CustomerId,
-               type: command.Type,
-               quantity: command.Quantity,
-               value: command.Value,
-               transactionDate: DateTime.Now
-            );
-
-
-
-            await _repository.AddAsync(transaction);
-            await _repository.CommitAsync();
-
-            if (transaction.Type == TypeEnum.purchase)
+            if (command.Type == TypeEnum.purchase)
             {
-                var investmentCommand = new RegisterInvestmentCommand(
-                    customerId: transaction.CustomerId,
-                    productId: transaction.ProductId,
-                    transactionId: transaction.Id,
-                    purchaseDate: DateTime.Now,
-                    isAvailable: true
-                    );
+                var investment = await _investmentRepository.GetByCustomerIdAndProductId(command.CustomerId, command.ProductId);
 
-                var result = await _mediator.Send(investmentCommand);
+                if(investment is not null)
+                {
+                    AddError("You already have this product.");
+                    return ValidationResult;
+                }
+                else
+                {
+                    var transaction = await CreateTransaction(command);
+
+                    var investmentCommand = new RegisterInvestmentCommand(
+                       customerId: transaction.CustomerId,
+                       productId: transaction.ProductId,
+                       transactionId: transaction.Id,
+                       purchaseDate: DateTime.Now,
+                       isAvailable: true);
+
+                    var result = await _mediator.Send(investmentCommand);
+                }
             }
 
-            if (transaction.Type == TypeEnum.sale)
+            if (command.Type == TypeEnum.sale)
             {
-                var investment = await _investmentRepository.GetByCustomerIdAndProductId(transaction.CustomerId, transaction.ProductId);
-                investment.IsAvailable = false;
+                var investment = await _investmentRepository.GetByCustomerIdAndProductId(command.CustomerId, command.ProductId);
 
-                if (investment != null)
+                if (investment is not null)
                 {
+                    await CreateTransaction(command);
+
+                    investment.IsAvailable = false;
+
                     var investmentChangeCommand = new ChangeInvestmentCommand(
                            investment.Id,
                            investment.IsAvailable);
@@ -91,6 +90,24 @@ namespace InvestmentPortfolio.Application.Commands.RegisterTransaction
             _logger.LogInformation($"{nameof(RegisterTransactionCommandHandler)} successfully completed");
 
             return ValidationResult;
+        }
+
+
+        public async Task<Transaction> CreateTransaction(RegisterTransactionCommand command)
+        {
+                var transaction = new Transaction(
+                   id: Guid.NewGuid(),
+                   productId: command.ProductId,
+                   customerId: command.CustomerId,
+                   type: command.Type,
+                   quantity: command.Quantity,
+                   value: command.Value,
+                   transactionDate: DateTime.Now);
+
+            await _repository.AddAsync(transaction);
+            await _repository.CommitAsync();
+
+            return transaction;
         }
     }
 }

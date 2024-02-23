@@ -19,5 +19,6 @@ namespace InvestmentPortfolio.Domain.Models.Entities
         public string Email { get; private set; }
 
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace InvestmentPortfolio.Domain.Repositories
         Task<List<Investment>> FindAllByAsync(Func<Investment, bool> predicate);
         Task<List<Investment>> GetAllAsync();
         Task<Investment> GetByCustomerIdAndProductId(Guid customerId, Guid productId);
+        Task<Investment> GetByTransactionId(Guid transactionId);
         #endregion
 
         Task CommitAsync();
