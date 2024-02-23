@@ -47,3 +47,33 @@
   <h4>Estrutura do banco de dados</h4>
   <img width="726" alt="diagrama2" src="https://github.com/jovemdan/investment-portfolio/assets/25301052/ae50d03d-5514-49a6-8e09-4b9e85b3c02b">
 </p>
+
+## Rotas da API
+
+#### 3 - Administrador
+<details>
+  <summary><strong>POST em /administrador-register</><a><strong></summary>
+
+  - Rota para cadastrar um administrador
+
+  ```json
+{
+  "name": "ADM",
+  "email": "adm@gmail.com"
+}
+  ```
+</details>
+
+<details>
+  <summary><strong>GET em /administrador-register</><a><strong></summary>
+
+  - Rota para buscar todos os administradores
+
+  ```json
+{
+  "name": "ADM",
+  "email": "adm@gmail.com"
+}
+  ```
+</details>
+
