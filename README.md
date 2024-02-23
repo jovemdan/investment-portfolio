@@ -50,7 +50,7 @@
 
 ## Rotas da API
 
-#### 3 - Administrador
+#### Administrador
 <details>
   <summary><strong>POST em /administrador-register</><a><strong></summary>
 
@@ -69,11 +69,14 @@
 
   - Rota para buscar todos os administradores
 
-  ```json
-{
-  "name": "ADM",
-  "email": "adm@gmail.com"
-}
-  ```
 </details>
+
+<details>
+  <summary><strong>GET em /administrador-register/detail?administratorId={id}'</><a><strong></summary>
+
+  - Rota para buscar um administrador por id.
+
+</details>
+
+#### Customer
 
