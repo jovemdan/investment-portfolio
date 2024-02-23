@@ -45,6 +45,5 @@
 
 <p align="center">
   <h4>Estrutura do banco de dados</h4>
-  <img width="812" alt="diagrama" src="https://github.com/jovemdan/investment-portfolio/assets/25301052/fd3b0cfe-e3e6-4e16-ba76-78b86bf61d52">
-
+  <img width="726" alt="diagrama2" src="https://github.com/jovemdan/investment-portfolio/assets/25301052/ae50d03d-5514-49a6-8e09-4b9e85b3c02b">
 </p>
