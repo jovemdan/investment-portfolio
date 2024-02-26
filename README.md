@@ -79,4 +79,60 @@
 </details>
 
 #### Customer
+<details>
+  <summary><strong>POST em /customer-registration</><a><strong></summary>
+
+  - Rota para cadastrar um cliente
+
+  ```json
+{
+  "name": "Danilo",
+  "cell_phone": "11984423341",
+  "main_email": "danilo@gmail.com"
+}
+  ```
+</details>
+
+<details>
+  <summary><strong>GET em /customer-registration</><a><strong></summary>
+
+  - Rota para buscar todos os clientes
+
+</details>
+
+<details>
+  <summary><strong>GET em /customer-registration/detail?customerId={id}</><a><strong></summary>
+
+  - Rota para buscar um cliente
+
+</details>
+
+
+#### Product
+<details>
+  <summary><strong>POST em /product-registration</><a><strong></summary>
+
+  - Rota para cadastrar um produto
+
+  ```json
+{
+  "name": "Tesouro Selic",
+  "price": 400,
+  "due_date": "2024-02-21"
+}
+  ```
+</details>
+
+<details>
+  <summary><strong>GET em /product-registration</><a><strong></summary>
+
+  - Rota para buscar todos os produtos
+</details>
+
+<details>
+  <summary><strong>GET em /product-registration</><a><strong></summary>
+
+  - Rota para buscar um produto
+</details>
+
 
